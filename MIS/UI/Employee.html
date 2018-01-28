@@ -1,0 +1,15 @@
+﻿<div>
+
+    <h2>MIS Information</h2>
+    EmployeeNumber :-<input [(ngModel)]="EmployeeObj.EmployeeNumber" type="text"  id="text1" /><br />
+    Employee Name  :-<input [(ngModel)]="EmployeeObj.EmployeeName " id="Text1" type="text" /> <br />
+    Email          :-<input [(ngModel)]="EmployeeObj.Email" type="text" id="text2" /><br />
+    WorkOrder      :-<input [(ngModel)]="EmployeeObj.WorkOrder" type="text" id="text2" /><br />
+    Leave          :-<input [(ngModel)]="EmployeeObj.Leave" type="date" id="text2" /><br />
+
+    <input id="Btn1" type="button" value="Save" (click)="Add()" />
+    <input id="Btn2" type="button" value="Edit" (click)="Edit()" />
+    <input id="Btn3" type="button" value="Cancel" (click)="Cancel()" />
+
+
+</div>

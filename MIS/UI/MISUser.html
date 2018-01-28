@@ -1,0 +1,33 @@
+﻿<form action="action_page.php" style="border:1px solid #ccc">
+    <div class="container">
+        <h1>MIS Registration</h1>
+        <p>Please fill your leaves here</p>
+        <hr>
+
+        <label><b>Employee Number</b></label>
+        <input [(ngModel)]="EmployeeObj.EmployeeNumber" type="text" placeholder="Enter Employee Number" name="empNum" required>
+
+        <label><b>Employee Name</b></label>
+        <input [(ngModel)]="EmployeeObj.EmployeeName" type="text" placeholder="Enter Name" name="empName" required>
+
+        <label><b>Email</b></label>
+        <input [(ngModel)]="EmployeeObj.Email" type="text" placeholder="Enter Email" name="email" required>
+
+        <label><b>Work Order</b></label>
+        <input [(ngModel)]="EmployeeObj.WorkOrder" type="text" placeholder="Enter WorkOrder" name="workOrder" required>
+
+        <label><b>Leave</b></label>
+        <input [(ngModel)]="EmployeeObj.Leave" type="date" placeholder="Enter Leave" name="leave" required>
+
+
+        <div class="clearfix">
+            <button type="button" class="cancelbtn" >Add Leave</button>
+            <button type="submit" class="signupbtn" (click)="Add()">Done Registration</button>
+        </div>
+
+        <grid-ui [grid-Data]="Employees"
+                 [grid-entity]="Employee"
+                 (grid-output)="Select($event)">
+        </grid-ui>
+    </div>
+</form>

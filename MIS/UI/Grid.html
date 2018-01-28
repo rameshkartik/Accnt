@@ -1,0 +1,16 @@
+﻿
+<table>
+    <tr>
+        <td [attr.colpsan]="1200" *ngFor="let col of gridColumns">
+            {{col}}
+        </td>
+    </tr>
+    <tr *ngFor="let row of gridData">
+        <td [attr.colpsan]="1200" *ngFor="let colName of gridColumns">
+            {{row[colName]}}
+        </td>
+        <td [attr.colpsan]="1200">
+            <a href="#" (click)="Select(row)">Select</a>
+        </td>
+    </tr>
+</table>    
