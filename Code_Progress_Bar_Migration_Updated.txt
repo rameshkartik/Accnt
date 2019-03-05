@@ -1,0 +1,116 @@
+/* ----Code for Progress Bar Migration ----*/
+
+//Creating Model for 'state'
+class State{
+ stateName: string;
+ progressBarPercentageValue:number;
+
+ constructor(
+    stateName: string,
+    progressBarPercentageValue: number
+  ) {
+    this.stateName = stateName;
+	this.progressBarPercentageValue=progressBarPercentageValue;
+  }
+}
+
+
+//Below is the main state of our page. It will contain the below fields-
+
+class State{
+PageState:object 				//This object will further contain te below fields- 
+	FlowName: string   			//This is the name of the flow e.g. 'Add a Driver' or 'Update a Driver'
+	PageName: string   			//This will contain the actual page in which we are standing e.g. ''
+	PercentageValue: number  		//This will contain a numeric value which will signify the portion of the flow that has been completed.
+	Flag: string				//This is a flag to specify special cases like 'DOB Mismatch'
+}
+
+//Creating a Store - Below is the sample code snippet for creating the angular redux store
+class Store<T> {
+  private _state: T;
+ 
+  constructor(
+    private reducer: Reducer<T>,
+    initialState: T
+  ) {
+    this._state = initialState;
+  }
+ 
+  getState(): T {
+    return this._state;
+  }
+ 
+  dispatch(action: Action): void {
+    this._state = this.reducer(this._state, action);
+  }
+}
+
+ //Creating an Action Interface
+interface Action {
+  type: string;
+  payload?: any;
+}
+
+//Creating Reducer interface
+interface Reducer<T> {
+  (state: T, action: Action): T;
+}
+
+//Defining an action for 'Update Driver' workflow
+let updateDriverAction: Action = { type: 'UPDATE_DRIVER' };
+
+//Reducer switch statement
+let reducer: Reducer<State> = (state: State, action: Action) => {
+  switch (action.type) {
+  case 'UPDATE_DRIVER':
+    return newState; 
+    /*
+	This is where the main logic of our store will reside.E.g. We start on page 2 of 'Update Driver' workflow which has say, total 4 pages. So, the old 		Page State object will be like-
+
+	
+	FlowName: 'UPDATE_DRIVER'			//We are currently on this flow- 'Update a Driver'
+	PageName: 'Update Driver Type' //Driver select	//The second page in this flow is 'Update Driver Type'
+	PercentageValue: 50				//Since total 4 pages and we are on 2nd page hence, (2/4)%= 50%
+	Flag: null					//We did not encounter any special case yet, so flag will be null.
+
+
+	Now, when the page requests information for the new state of the page, the reducer will hit this switch case based on the flow name 	        		('UPDATE_DRIVER'). The new state of the page will be like this-
+
+	FlowName: 'UPDATE_DRIVER'			//We are currently on this flow- 'Update a Driver'
+	PageName: 'Driver Select'			//The third page in this flow is 'Update Driver Type'
+	PercentageValue: 75				//Since total 4 pages and we have to go to 3rd page hence, (3/4)%= 75%
+	Flag: null					//We did not encounter any special case yet, so flag will be null.
+
+	The reducer will return this new page state to the view and also, this new state will be updated in our local JSON constant which stores the state 		information. 
+
+	Now, let us assume that on the third page the DOB Mismatch issue occurs. So, the current state must be like- 
+
+	FlowName: 'UPDATE_DRIVER'			//We are currently on this flow- 'Update a Driver'
+	PageName: 'Driver Select'			//The third page in this flow is 'Update Driver Type'
+	PercentageValue: 75				//Since total 4 pages and we have to go to 3rd page hence, (3/4)%= 75%
+	Flag: 'DOB Mismatch'				//Flag value will signify the error that occured.
+
+	And, the reducer will return the new page state as-
+
+	FlowName: 'UPDATE_DRIVER'			//We are currently on this flow- 'Update a Driver'
+	PageName: 'Update Driver Type'			//The third page in this flow is 'Update Driver Type'
+	PercentageValue: 66.66				//For DOB Mismatch say, we have 3 pages then, (2/3)%= 66.66%
+	Flag: 'DOB Mismatch'				//Flag value will signify the error that occured.
+
+
+	
+
+   */
+  case 'ADD_DRIVER':
+    //Logic for Add Driver flow will be added here.
+  default:
+    return state; 
+  }
+};
+
+//Creating an instance of store and fetching default state
+let store = new Store<State>(reducer,null );
+console.log(store.getState()); 
+
+//Creating an instance of store to fetch UpdateDriver workflowdata
+store.dispatch({ type: 'UPDATE_DRIVER' });
